@@ -14,20 +14,29 @@ const router = new Router()
 //路由路径前缀设置
 router.prefix('/api')
 
-//获取get请求中的params
-router.get('/get', ctx => {
-  const params = ctx.request.query
-  console.log(JSON.stringify(params, null, 2))
-  ctx.body = {...params}
-})
-
-router.post('/post', async (ctx) => {
+router.post('/user', async (ctx) => {
   let {body, header} = ctx.request
-  console.log(ctx.request)
   console.log(header)
-  console.log(body)
+  if(!body.name || !body.email) {
+    ctx.body = {
+      "code": 404,
+      "msg": "name和email不得为空"
+    }
+    return
+  }
+  if(!header.role || header.role !=='admin') {
+    ctx.body = {
+      "code": 401,
+      "msg": "unauthorized post"
+    }
+    return
+  }
   ctx.body = {
-    ...body
+    "code": 200,
+    "data": {
+      "name": "zaishuiyiixa",
+      "email": "zaishuiyixa@email.com"
+    }
   }
 })
 
