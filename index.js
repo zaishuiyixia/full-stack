@@ -5,14 +5,26 @@ const Router = require('koa-router')
 const cors = require('@koa/cors')
 //koa-body 协议解析中间件
 const koaBody = require('koa-body')
+//格式化返回数据中间件
 const json = require('koa-json')
 
 const app = new Koa()
 const router = new Router()
 
+//路由路径前缀设置
+router.prefix('/api')
+
+//获取get请求中的params
+router.get('/get', ctx => {
+  const params = ctx.request.query
+  console.log(JSON.stringify(params, null, 2))
+  ctx.body = {...params}
+})
+
 router.post('/post', async (ctx) => {
-  let {body} = ctx.request
+  let {body, header} = ctx.request
   console.log(ctx.request)
+  console.log(header)
   console.log(body)
   ctx.body = {
     ...body
