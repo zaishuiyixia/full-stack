@@ -1,18 +1,21 @@
 const path = require('path')
+const utils = require('./utils')
+const webpack = require('webpack')
 const nodeExcternals = require('webpack-node-externals')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const webpackconfig = {
   target: 'node',
-  mode: 'development',
   entry: {
-    server: path.join(__dirname, 'src/index.js')
+    server: path.join(utils.APP_PATH, 'index.js')
+  },
+  resolve: {
+    ...utils.getWebpackResolveConfig()
   },
   output: {
     filename: '[name].bundle.js',
-    path:  path.join(__dirname, './dist')
+    path: utils.DIST_PATH
   },
-  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -20,13 +23,14 @@ const webpackconfig = {
         use: {
           loader: 'babel-loader'
         },
-        exclude: [path.join(__dirname, './node_modules')]
+        exclude: [path.join(__dirname, '/node_modules')]
       }
     ]
   },
   externals: [nodeExcternals()],
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.EnvironmentPlugin(['NODE_ENV'])
   ],
   node: {
     console: true,
@@ -39,5 +43,7 @@ const webpackconfig = {
     path: true
   }
 }
+
+// console.log(webpackconfig)
 
 module.exports = webpackconfig

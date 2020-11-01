@@ -1,25 +1,34 @@
 # full-stack
-Koa配置开发热加载、ES6语法支持、webpack配置
+优化webpack配置，npm构建脚本
 
-使用es6语法不能直接用node src/index.js运行脚本了，使用如下命令
+npm-check-updates检查依赖包更新，安装完之后就可以使用ncu这个命令
 ```
-npx babel-node src/index.js
-```
-备注 npx babel-node src/index.js 相当于 npx .\node_modules\.bin\babel-node src/index.js 
-
-使用es6语法不能直接用npx nodemon src/index.js运行脚本了，如果全局安装了babel-node，可以使用如下命令
-```
-npx nodemon --exec babel-node src/index.js
-```
-如果是局部安装了babel-node，则使用：
-```
-npx nodemon --exec npx babel-node src/index.js
+npm install -g npm-check-updates
 ```
 
-1.clean-webpack-plugin: 清理dist目录下的文件
-2.webpack-node-externals 主要是对node_modules下的文件做一个排除处理
-3.@babel/core @babel/node 调试需要
-4.@babel/preset-env 对特性做支持
-5.babel-loader 在webpack中使用到的loader
-6.cross-env 设置环境变量       
-7.nodemon 开发过程中使用，文件发生变化时，重启服务
+koa-compose整合中间件
+```
+npm install koa-compose
+```
+
+koa-compress压缩中间件
+```
+npm install koa-compress -S
+```
+
+webpack-merge合并webpack配置
+```
+npm install webpack-merge -D
+```
+
+TerserWebpackPlugin打包时压缩js代码
+```
+npm install terser-webpack-plugin --D
+```
+
+SplitChunksPlugin避免重复的引入依赖
+
+rimraf 使用 webpack build文件项目时每次都会生成一个dist目录，有时需要把dist目录里的所以旧文件全部删掉，除了可以使用rm -rf /dist/命令删除外，还可以使用rimraf /dist/命令
+```
+npm install rimraf -D
+```
