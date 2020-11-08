@@ -8,9 +8,8 @@ class PublicController {
       color: true,//验证码字体颜色
       noise: Math.floor(Math.random()*5),//干扰线的条数
       width: 150,
-      height: 50
+      height: 38
     })
-    console.log(newCaptcha)
     ctx.body = {
       code: 200,
       data: newCaptcha.data
